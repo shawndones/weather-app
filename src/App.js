@@ -16,7 +16,7 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    fetch("http://api.openweathermap.org/data/2.5/weather?zip=40107,us&appid=84ef52b9160716fd0953ce92456fb897")
+    fetch("")
       .then(response => response.json())
       .then(data => {
         this.setState({
