@@ -1,28 +1,53 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
-class App extends Component {
+export default class App extends Component {
+
+  constructor() {
+    super();
+    this.state = {
+      forecast: {
+        main: {},
+        weather: []
+      }
+    }
+    this.tempConvert = this.tempConvert.bind(this)
+    this.getCurrentConditions = this.getCurrentConditions.bind(this)
+  }
+
+  componentDidMount() {
+    fetch("http://api.openweathermap.org/data/2.5/weather?zip=40107,us&appid=84ef52b9160716fd0953ce92456fb897")
+      .then(response => response.json())
+      .then(data => {
+        this.setState({
+          forecast: data
+        })
+      })
+  }
+
+  getCurrentConditions() {
+      const conditions = this.state.forecast.weather.map(item => {
+        return item.main
+      })
+
+      return conditions
+
+  }
+
+  tempConvert(temp) {
+    temp = (temp-273.15)* 9/5 + 32
+    return Math.floor(temp)
+  }
+
   render() {
+    const temp = this.tempConvert(this.state.forecast.main.temp)
+    const conditions = this.getCurrentConditions()
+
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div className="weatherApp">
+        <h1>Current temperature in Boston, KY is {temp} degrees</h1>
+        <h2>Current Conditions: {conditions}</h2>
       </div>
     );
   }
 }
-
-export default App;
