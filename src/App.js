@@ -1,52 +1,53 @@
 import React, { Component } from 'react';
 import './App.css';
 
-export default class App extends Component {
+/*
+* Next Steps
+* - Create Input Field for location by zipcode
+* 
+*/
 
-  constructor() {
-    super();
-    this.state = {
-      forecast: {
-        main: {},
-        weather: []
-      }
-    }
-    this.tempConvert = this.tempConvert.bind(this)
-    this.getCurrentConditions = this.getCurrentConditions.bind(this)
+const APIKEY = "84ef52b9160716fd0953ce92456fb897"
+
+export default class App extends Component {
+  state = {
+    zip: "40107",
+    forecast: {
+      main: {}
+    },
+    weather: []
   }
 
   componentDidMount() {
-    fetch("")
+    fetch(`http://api.openweathermap.org/data/2.5/weather?zip=${this.state.zip},us&appid=${APIKEY}`)
       .then(response => response.json())
       .then(data => {
+
+        const {weather} = data
+        console.log(weather[0])
+
         this.setState({
-          forecast: data
+          forecast: data,
+          weather: weather[0]
         })
       })
   }
 
-  getCurrentConditions() {
-      const conditions = this.state.forecast.weather.map(item => {
-        return item.main
-      })
 
-      return conditions
-
-  }
-
-  tempConvert(temp) {
+  tempConvert = (temp) => {
     temp = (temp-273.15)* 9/5 + 32
     return Math.floor(temp)
   }
 
   render() {
     const temp = this.tempConvert(this.state.forecast.main.temp)
-    const conditions = this.getCurrentConditions()
-
+    const conditions = this.state.weather
     return (
       <div className="weatherApp">
-        <h1>Current temperature in Boston, KY is {temp} degrees</h1>
-        <h2>Current Conditions: {conditions}</h2>
+        <h1>Current Weather in Boston, KY</h1>
+        <h2>{conditions.main}</h2>
+        <img src={`http://openweathermap.org/img/w/${conditions.icon}.png`} alt="" />
+        <p>{temp}&#176;</p>
       </div>
     );
   }
