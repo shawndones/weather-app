@@ -75,6 +75,8 @@ export default class App extends Component {
               <p className="temp">
                 {this.tempConvert(weatherItem.main.temp)}&#176;
               </p>
+              <img src={`http://openweathermap.org/img/w/${weatherItem.weather[0].icon}.png`} alt="" />
+              <p>{`${weatherItem.weather[0].description}`}</p>
           </div>
         ))}
         </div>
