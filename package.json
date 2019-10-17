@@ -5,6 +5,7 @@
   "dependencies": {
     "moment": "^2.24.0",
     "react": "^16.8.6",
+    "react-leaflet": "^2.4.0",
     "react-scripts": "2.1.8"
   },
   "scripts": {
