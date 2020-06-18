@@ -10,8 +10,7 @@ import moment from 'moment';
 * 
 */
 
-// const APIKEY = "84ef52b9160716fd0953ce92456fb897"
-const APIKEY = process.env.WEATHER_API_KEY
+const APIKEY = process.env.REACT_APP_WEATHER_API_KEY;
 
 export default class App extends Component {
   state = {
